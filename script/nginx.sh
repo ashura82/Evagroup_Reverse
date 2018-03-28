@@ -31,13 +31,13 @@ spinner()
 local pid=$!
 local delay=0.75
 local spinstr='...'
-echo "${cyan}       Installation..${reset} "
+echo "${cyan}Installation..${reset} "
 while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
     local temp=${spinstr#?}
-    printf "       %s" "$spinstr"
+    printf "%s  " "$spinstr"
     local spinstr=$temp${spinstr%"$temp"}
     sleep $delay
-    printf "    \b\b\b"
+    printf "\b\b\b"
     done
     printf "    \b\b\b\b"
     printf "\n"
@@ -55,10 +55,16 @@ if [[ (-f /tmp/nginx-autoinstall.log ) ]];then
 	rm /tmp/nginx-autoinstall.log
 fi
 
+if [[ ! -d  /etc/nginx  ]]; then
+	rm -r -f /etc/nginx
+fi
 
-rm -r -f /etc/nginx
-rm -r -f /usr/local/src/nginx
-rm -f /etc/init.d/nginx
+if [[ ! -d /usr/local/src/nginx ]]; then
+	rm -r -f /usr/local/src/nginx
+fi
+if [[ (-f /etc/init.d/nginx) ]]; then
+	rm -f /etc/init.d/nginx
+fi
 
 # Variables
 NGINX_MAINLINE_VER=1.13.10
@@ -104,13 +110,14 @@ while [[ $pagespeed != "y" && $pagespeed != "n" ]];do
 done
 
 
-rm -r /usr/local/src/nginx/ >> /tmp/nginx-autoinstall.log 2>&1
 mkdir -p /usr/local/src/nginx/modules >> /tmp/nginx-autoinstall.log 2>&1
 
 
 echo "deb http://ftp.debian.org/debian stretch-backports main" > /etc/apt/sources.list.d/backports.list
 
-apt-get update > /dev/null 2>&1 && apt-get upgrade > /dev/null 2>&1
+
+echo "       Update and Upgrade                "
+apt-get update -qq && apt-get upgrade > /dev/null 2>&1 & spinner
 
 if [ $? -eq 0 ]; then
 	echo -ne "       Update and Upgrade                [${green}OK${reset}]"
@@ -123,7 +130,7 @@ else
 	exit 1
 fi
 
-apt-get install screen build-essential ca-certificates wget curl libpcre3 libpcre3-dev  net-tools autoconf unzip automake libtool tar git libssl-dev zlib1g-dev uuid-dev  gcc -y >> /tmp/nginx-autoinstall.log 2>&1 & spinner
+apt-get install screen build-essential ca-certificates wget curl libpcre3 libpcre3-dev  net-tools autoconf unzip automake libtool tar git libssl-dev zlib1g-dev uuid-dev  gcc -y >> /tmp/nginx-autoinstall.log 2>&1 
 if [ $? -eq 0 ]; then
 	echo -ne "       Installation des dependances      [${green}OK${reset}]\r"
 	echo -ne "\n"
@@ -375,7 +382,7 @@ source /opt/flask/venv/bin/activate
 export FLASK_APP="/opt/flask/api.py"
 screen -d -m flask run --host 0.0.0.0 --port 8010 >> /tmp/flask-install.log 2>&1
 
-netstat -tulpn | grep 8010 >> /dev/null
+netstat -tulpn | grep 8010 > /dev/null 2>&1
  
 if [ $? -eq 0 ]; then
 	echo -ne "       Installation et déploiement de l'api      [${green}OK${reset}]\n"
@@ -383,8 +390,8 @@ if [ $? -eq 0 ]; then
 	echo -ne "	 Fichier Version Nginx /tmp/nginx_ver\n"
 	echo -ne "\n"
 else
-	echo -e "       Installation et déploiement de l'api      [${red}FAIL${reset}]"
-	echo $?
+	echo -e "        Installation et déploiement de l'api      [${red}FAIL${reset}]"
+	echo ""
 	echo "Veuillez regarder les logs :  /tmp/flask-install.log"
 	echo ""
 	exit 1
