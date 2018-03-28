@@ -21,7 +21,19 @@ Ce repository permet de déployer un serveur avec les fonctionnalitées suivante
    * **script** - Contient les scripts de configuration.
    
    
-    
+## Lancement script installation
+
+Pour lancer l'automatisation de l'installation, il faut suivre les étapes suivantes :
+
+- faire la mise à jour du serveur avec la commande **apt-get update && apt-get upgrade**
+- cloner le repository via la commande **git clone https://github.com/ashura82/Evagroup_Reverse.git**
+- rentrer dans le dossier crée et lancer la commande **python install.py**
+
+>**Prérequis :**
+>  - être sous le compte **root** de la machine
+>  - connection à internet fonctionnelle
+>  - git installé sur le serveur
+>  - le script ne fonctionne que sur Debian. Le script a été testé sur Debian9    
  
 # ConfigServer Security & Firewall
 
