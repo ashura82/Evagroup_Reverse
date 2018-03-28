@@ -322,7 +322,7 @@ if [[ ! -f /etc/init.d/nginx ]]; then
 	update-rc.d nginx defaults
 fi
 
-apt-get install -y python-certbot-nginx -t stretch-backports >> /tmp/nginx-autoinstall.log  > /dev/null 2>&1
+apt-get install python-certbot-nginx -t stretch-backports >> /tmp/nginx-autoinstall.log 
 
 if [[ ! -d "/opt/certbot" ]]; then 
 	mkdir /opt/certbot
