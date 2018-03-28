@@ -10,6 +10,7 @@ from mod import *
 ######################
 # Installation NGINX #
 ######################
+subprocess.call('chmod +x ./script/nginx.sh',shell=True)
 subprocess.call('./script/nginx.sh',shell=True)
 
 ##########################
