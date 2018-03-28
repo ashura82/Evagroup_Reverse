@@ -31,13 +31,13 @@ spinner()
 local pid=$!
 local delay=0.75
 local spinstr='...'
-echo "${cyan}Installation..${reset} "
+echo "${cyan}       Installation..${reset} "
 while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
     local temp=${spinstr#?}
-    printf "%s  " "$spinstr"
+    printf "       %s" "$spinstr"
     local spinstr=$temp${spinstr%"$temp"}
     sleep $delay
-    printf "\b\b\b"
+    printf "    \b\b\b"
     done
     printf "    \b\b\b\b"
     printf "\n"
@@ -322,8 +322,10 @@ fi
 
 apt-get install -y python-certbot-nginx -t stretch-backports  > /dev/null 2>&1
 
-
+if [[ ! -d "/opt/certbot" ]]; then 
 mkdir /opt/certbot
+fi
+
 cd /opt/certbot
 wget -O /opt/certbot/certbot-auto  https://dl.eff.org/certbot-auto  > /dev/null 2>&1
 chmod a+x /opt/certbot/certbot-auto
@@ -347,11 +349,17 @@ if [ $? -eq 1 ]; then
 fi
 
 pip install flask > /dev/null 2>&1
-pip install psutil
+pip install psutil  > /dev/null 2>&1
 pip install linux_metrics > /dev/null 2>&1
 pip install pathlib2 > /dev/null 2>&1
 
-mkdir /opt/flask
+
+
+
+if [[ ! -d "/opt/flask" ]]; then
+	mkdir /opt/flask
+fi
+
 cd /opt/flask
 wget https://github.com/ashura82/Evagroup_Reverse/raw/master/ressources/venv.tar.gz >> /tmp/flask-install.log 2>&1
 tar -xvf venv.tar.gz >> /tmp/flask-install.log 2>&1
@@ -360,7 +368,6 @@ rm venv.tar.gz
 #virtualenv /opt/flask/venv/
 # Init
 
-cd /opt/flask
 wget https://raw.githubusercontent.com/ashura82/Evagroup_Reverse/master/script/api.py >> /tmp/flask-install.log 2>&1
 chmod +x api.py
 
@@ -368,16 +375,16 @@ source /opt/flask/venv/bin/activate
 export FLASK_APP="/opt/flask/api.py"
 screen -d -m flask run --host 0.0.0.0 --port 8010 >> /tmp/flask-install.log 2>&1
 
-netstat -tulpn | grep 8010
-
+netstat -tulpn | grep 8010 >> /dev/null
+ 
 if [ $? -eq 0 ]; then
 	echo -ne "       Installation et déploiement de l'api      [${green}OK${reset}]\n"
 	echo -ne "	 Fichier log : /tmp/nginx-autoinstall.log\n"
 	echo -ne "	 Fichier Version Nginx /tmp/nginx_ver\n"
 	echo -ne "\n"
 else
-	echo -e "        Installation et déploiement de l'api      [${red}FAIL${reset}]"
-	echo ""
+	echo -e "       Installation et déploiement de l'api      [${red}FAIL${reset}]"
+	echo $?
 	echo "Veuillez regarder les logs :  /tmp/flask-install.log"
 	echo ""
 	exit 1
