@@ -10,7 +10,7 @@ from mod import *
 ######################
 # Installation NGINX #
 ######################
-#subprocess.call('./script/nginx.sh',shell=True)
+subprocess.call('./script/nginx.sh',shell=True)
 
 ##########################
 # Installation IDS SNORT #
