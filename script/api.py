@@ -20,9 +20,15 @@ app = Flask(__name__)
 #########################
 
 @app.route('/details/<vhost>')
+#A JOUR
 def details(vhost):
-    contents = Path("/etc/nginx/sites-available/%s" % vhost).read_text()
-    return contents
+    data = []
+    item = {'name': vhost}
+    item['conf']=Path("/etc/nginx/sites-available/%s" % vhost).read_text()
+    item['active'] = os.path.exists("/etc/nginx/sites-enabled/%s" % vhost)
+    data.append(item)
+    jason = json.dumps(data)
+    return jason
 
 
 @app.route('/add_vhost/', methods=['POST'])
