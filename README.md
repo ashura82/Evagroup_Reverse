@@ -29,9 +29,8 @@ Pour lancer l'automatisation de l'installation, il faut suivre les étapes suiva
 ### Il faut impérativement que l'interface du serveur se nomme ens224
 
 Commande pour modifier :
-ifconfig (nom-interface) down  
+ifdown (nom-interface)  
 ip link set (nom-interface) name ens224  
-ifconfig ens224 up
 dhclient (si configuré en dhcp)
 
 - faire la mise à jour du serveur avec la commande **apt-get update && apt-get upgrade**
