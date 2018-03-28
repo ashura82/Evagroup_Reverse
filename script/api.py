@@ -56,6 +56,14 @@ def remove_vhost(vhost):
     dirs = os.listdir(path)
     return "%s" % dirs
 
+@app.route('/edit_vhost/', methods=['POST'])
+def edit_vhost():
+        if request.method == 'POST':
+            vhost = request.form['vhost']
+            conf = request.form['conf']
+            with open("/etc/nginx/sites-available/%s" % vhost, "wb") as fo:
+                fo.write(render_template('edit.conf', vhost=vhost, conf=conf))
+        return "edit réussi"
 
 @app.route('/view_vhosts')
 def view_vhosts():

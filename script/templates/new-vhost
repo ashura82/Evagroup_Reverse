@@ -1,0 +1,12 @@
+server {
+    listen 80;
+    listen [::]:80;
+    server_name {{vhost}};
+    location ~ /\.well-known/acme-challenge {
+        allow all;
+    }
+    location / {
+        proxy_pass http://{{ip}}:{{port}};
+    }
+}
+
