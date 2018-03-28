@@ -14,7 +14,7 @@ Ce repository permet de déployer un serveur avec les fonctionnalitées suivante
   
    * **certificat** - Contient le script qui va nous générer les certificats HTTPS pour les sites webs
    
-   * **docs** - Contient la configuration de csf
+   * **docs** - Contient les documentations de CSF
    
    * **ressources** - Contient l'environnement virtuel nécessaire à l'api
 
