@@ -104,7 +104,7 @@ while [[ $pagespeed != "y" && $pagespeed != "n" ]];do
 	read -p "Pagespeed $PAGESPEED_VER [y/n] : "  -e pagespeed
 done
 
-if [[! -d /usr/local/src/nginx/modules ]];then
+if [[ ! -d /usr/local/src/nginx/modules ]];then
 	mkdir -p /usr/local/src/nginx/modules >> /tmp/nginx-autoinstall.log 2>&1
 fi
 
