@@ -35,9 +35,9 @@ def upIp():
 
 			intNet = raw_input()
 			try:
-        		intNet = int(intNet)
-    		except ValueError:
-        		print 'Saisissez un nombre'
+                		intNet = int(intNet)
+    	        	except ValueError:
+        	        	print 'Saisissez un nombre'
 
 			if type(intNet) is int:
 				indexError = len(ListNet)
@@ -54,7 +54,7 @@ def upIp():
 		#Récupération IP et hostname
 		subprocess.call('ping -c 4 -i 0.2 ' + ipBdd + ' > /dev/null 2>&1',shell=True)
 		hostnameCsf = socket.gethostname()
-		ipCsf = os.popen('ip addr show ' + intNet).read().split("inet ")[1].split("/")[0]
+		ipCsf = os.popen('ip addr show ' + testNet).read().split("inet ")[1].split("/")[0]
 
 		#Connexion SSH BDD
 		client = paramiko.SSHClient()
