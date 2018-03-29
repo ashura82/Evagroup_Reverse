@@ -22,6 +22,7 @@ def installCsf():
 
 	print 'Installation CSF                        [En cours]'
 	subprocess.call('tar -xzf csf.tgz > /dev/null 2>&1 && cd ./csf > /dev/null 2>&1 && ./install.sh > /dev/null 2>&1',shell=True)
+	subprocess.call('rm csf.tgz',shell=True)
 	print 'Installation CSF                        [OK]'
 
 	subprocess.call('perl /usr/local/csf/bin/csftest.pl > /dev/null 2>&1',shell=True)
