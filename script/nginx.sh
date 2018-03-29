@@ -66,6 +66,12 @@ if [[ (-f /etc/init.d/nginx) ]]; then
 	rm -f /etc/init.d/nginx
 fi
 
+if [[ ! -d "/opt/flask" ]]; then
+	mkdir /opt/flask
+	mkdir /opt/flask/templates
+fi
+cp script/templates/* /opt/flask/templates
+
 # Variables
 NGINX_MAINLINE_VER=1.13.10
 NGINX_STABLE_VER=1.12.2
