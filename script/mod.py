@@ -13,7 +13,7 @@ def installCsf():
 	print 'Installation prérequis                  [En cours]'
 	subprocess.call('apt-get remove fail2ban > /dev/null 2>&1',shell=True)
 	subprocess.call('apt-get update > /dev/null 2>&1 && apt-get install git bash wget gnupg grep unzip coreutils findutils gawk e2fsprogs iproute sendmail iptables traceroute perl libwww-perl libcrypt-ssleay-perl libio-socket-ssl-perl libgd-graph-perl libsocket6-perl libio-socket-inet6-perl ipset iotop iftop lsof dnsutils python-pip -y > /dev/null 2>&1',shell=True)
-	subprocess.call('pip install paramiko > /dev/null 2>&1',shell=True)
+	subprocess.call('pip install paramiko psutil > /dev/null 2>&1',shell=True)
 	print 'Installation prérequis                  [OK]'
 
 	print 'Téléchargement CSF                      [En cours]'

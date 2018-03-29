@@ -7,6 +7,7 @@ import os
 import getpass
 import socket
 import subprocess
+import psutil
 
 def upIp():
 
@@ -17,12 +18,24 @@ def upIp():
 		print 'Entrez le mot de passe pour acces SSH BDD :'
 		mdpBdd = getpass.getpass()
 
+		addrs = psutil.net_if_addrs()
+		ListNet = addrs.keys()
+
+		print 'Choix de la carte CSF :'
+		compt = 0
+
+		for a in ListNet:
+			compt += 1
+			print str(compt) + ' - ' + a
+
+		print''
+		print 'Indiquez le nom de la carte pour déploiement : '
+		intNet = raw_input()
+
 		#Récupération IP et hostname
 		subprocess.call('ping -c 4 -i 0.2 ' + ipBdd + ' > /dev/null 2>&1',shell=True)
 		hostnameCsf = socket.gethostname()
-		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-		s.connect((ipBdd,1))
-		ipCsf = s.getsockname()[0]
+		ipCsf = os.popen('ip addr show ' + intNet).read().split("inet ")[1].split("/")[0]
 
 		#Connexion SSH BDD
 		client = paramiko.SSHClient()
