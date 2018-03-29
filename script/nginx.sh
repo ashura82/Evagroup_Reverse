@@ -131,7 +131,7 @@ else
 	exit 1
 fi
 
-apt-get install screen build-essential ca-certificates wget curl libpcre3 libpcre3-dev  net-tools autoconf unzip automake libtool tar git libssl-dev zlib1g-dev uuid-dev  python-pip gcc -y >> /tmp/nginx-autoinstall.log 2>&1 
+apt-get install screen build-essential ca-certificates wget curl libpcre3 libpcre3-dev  net-tools autoconf unzip automake libtool tar git libssl-dev zlib1g-dev uuid-dev augeas-lenses libaugeas0 libffi-dev python-virtualenv python3-virtualenv virtualenv python-pip gcc -y >> /tmp/nginx-autoinstall.log 2>&1 
 if [ $? -eq 0 ]; then
 	echo -ne "       Installation des dependances      [${green}OK${reset}]\r"
 	echo -ne "\n"
