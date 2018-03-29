@@ -26,6 +26,12 @@ Ce repository permet de déployer un serveur avec les fonctionnalitées suivante
 Pour lancer l'automatisation de l'installation, il faut suivre les étapes suivantes :
 
 ### /!\ATTENTION, il est important d'installer préalablement le serveur BDD/!\
+### Il faut impérativement que l'interface du serveur se nomme ens224
+
+Commande pour modifier :
+ifdown (nom-interface)  
+ip link set (nom-interface) name ens224  
+dhclient (si configuré en dhcp)
 
 - faire la mise à jour du serveur avec la commande **apt-get update && apt-get upgrade**
 - cloner le repository via la commande **git clone https://github.com/ashura82/Evagroup_Reverse.git**
