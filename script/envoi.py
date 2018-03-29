@@ -22,15 +22,34 @@ def upIp():
 		ListNet = addrs.keys()
 
 		print 'Choix de la carte CSF :'
-		compt = 0
+		test = 0
 
-		for a in ListNet:
-			compt += 1
-			print str(compt) + ' - ' + a
+		while test == 0:
+			compt = 0
+			for a in ListNet:
+				compt += 1
+				print str(compt) + ' - ' + a
 
-		print''
-		print 'Indiquez le nom de la carte pour déploiement : '
-		intNet = raw_input()
+			print''
+			print "Indiquez l'index carte pour déploiement : "
+
+			intNet = raw_input()
+			try:
+        		intNet = int(intNet)
+    		except ValueError:
+        		print 'Saisissez un nombre'
+
+			if type(intNet) is int:
+				indexError = len(ListNet)
+				
+				if intNet > indexError :
+					print 'Erreur index'
+				else:
+					intNet -= 1
+					testNet = ListNet[intNet]
+					for a in ListNet:
+						if a == testNet :
+							test = 1
 
 		#Récupération IP et hostname
 		subprocess.call('ping -c 4 -i 0.2 ' + ipBdd + ' > /dev/null 2>&1',shell=True)
