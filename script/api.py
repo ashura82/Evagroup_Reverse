@@ -30,22 +30,23 @@ def details(vhost):
     jason = json.dumps(data)
     return jason
 
-
 @app.route('/add_vhost/', methods=['POST'])
 def add_vhost():
     if request.method == 'POST':
+        name = request.form['name']
         vhost = request.form['vhost']
-        ip = request.form['ip']
+        ip  = request.form['ip']
         port = request.form['port']
         mail = request.form['mail']
-        with open("/etc/nginx/sites-available/%s" % vhost, "wb") as fo:
-            fo.write(render_template(
-                'new-vhost', vhost=vhost, port=port, ip=ip))
-        # AJOUTER CERT BOT
+        with open("/etc/nginx/sites-available/%s" % name, "wb") as fo:
+            fo.write(render_template('new-vhost', vhost=vhost, port= port, ip = ip))
+        ln = 'ln -sf /etc/nginx/sites-available/'+name+' /etc/nginx/sites-enabled/'+name
+        subprocess.call(ln, shell=True)
         os.chdir("/opt/certbot/")
-        subprocess.call(
-            "echo 2 |  ./certbot-auto  --nginx --email %s --agree-tos  -d %s" % mail, vhost, True)
+        cmd = 'echo 2 |  ./certbot-auto  --nginx --email ' + mail + ' --agree-tos  -d ' + vhost
+        subprocess.call(cmd, shell=True)
     return "Ajout réussi"
+
 
 
 @app.route('/remove_vhost/<vhost>')
